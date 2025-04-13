@@ -1,0 +1,199 @@
+\documentclass[a4paper]{article}
+
+% --- Pacotes Essenciais ---
+\usepackage[utf8]{inputenc} % Para aceitar acentos diretamente
+\usepackage[T1]{fontenc}    % Codificação da fonte de saída (melhora hifenização, etc.)
+\usepackage[portuguese]{babel} % Suporte à língua portuguesa
+\usepackage{geometry}     % Para configurar as margens
+\usepackage{hyperref}     % Para criar links clicáveis (URLs)
+\usepackage{amsmath}      % Para possíveis comandos matemáticos futuros
+\usepackage{graphicx}     % Para incluir imagens
+\usepackage{float}        % <<< PACOTE ADICIONADO PARA POSICIONAMENTO [H]
+\usepackage{amsmath}
+% --- Configurações ---
+\geometry{a4paper, margin=1in} % Define margens (ex: 1 polegada)
+
+\hypersetup{ % Configura como os links aparecerão no PDF
+    colorlinks=true,       % Links coloridos em vez de caixas
+    linkcolor=blue,        % Cor dos links internos
+    filecolor=magenta,     % Cor dos links de arquivos locais
+    urlcolor=cyan,         % Cor dos links URL
+    pdftitle={Análise de Dados em Grafos - Trabalho 01}, % Título nos metadados do PDF
+    pdfauthor={José Freitas Alves Neto}, % Adicionado nome ao metadado
+    bookmarks=true,        % Gera bookmarks (índice) no PDF
+    bookmarksopen=true,    % Abre os bookmarks por padrão
+}
+
+% --- Informações do Documento ---
+\title{Análise de Dados em Grafos \\ Trabalho 01}
+\author{Aluno: José Freitas Alves Neto}
+\date{13 de Abril de 2025}
+
+% --- Início do Corpo do Documento ---
+\begin{document}
+
+\maketitle % Gera o título
+       \textbf{Link do projeto no Github:}
+        \begin{itemize}
+            \item \url{https://github.com/Netinhoklz/15_Graph_Theory_Inquiries}
+        \end{itemize}
+% --- Lista de Tarefas ---
+\begin{enumerate}
+
+    \item \textbf{Escolher 5 datasets de grafos. Fontes sugeridas:}
+
+        - Foram escolhidos dois Datasets de grafos que serão revesados para resolver as questões devido ao tamanho e a capacitadade computacional exigida pelo problema.
+         \begin{itemize}
+            \item \textbf{Rede Neural (C. elegans):}
+            O dataset do C. elegans mapeia as conexões direcionais do seu sistema neural, onde cada nó representa um neurônio e cada aresta indica uma sinapse ou junção elétrica. Compilado a partir dos dados experimentais de White et al. (1986) e analisado por Watts e Strogatz (1998), ele destaca propriedades "small-world" da rede, servindo como referência essencial em estudos de neurociência e redes complexas.
+
+            % --- Imagem da Rede Neural (Fixada com [H]) ---
+            \begin{figure}[H] % Força posicionamento AQUI
+                \centering
+                % !!! Verifique/substitua o nome do arquivo !!!
+                \includegraphics[width=0.43\linewidth]{imagem_rede_neural.png}
+                \caption{Grafo da Rede neural do C. elegans.}
+                \label{fig:rede_neural}
+            \end{figure}
+
+            \item \textbf{Karatê}:
+            O grafo do Clube de Karatê de Zachary mapeia as amizades entre 34 membros de um clube universitário dos anos 1970, onde cada nó representa um indivíduo e as arestas indicam relações de amizade. Ele serve para analisar fluxos de informações, conflitos e a formação de subgrupos, conforme descrito por Zachary (1977).
+
+            % --- Imagem do Clube de Karatê (Fixada com [H]) ---
+            \begin{figure}[H] % Força posicionamento AQUI
+                \centering
+                 % !!! Verifique/substitua o nome do arquivo !!!
+                \includegraphics[width=0.43\linewidth]{imagem_club_karate.png}
+                \caption{Grafo do Clube de Karatê de Zachary.}
+                \label{fig:club_karate}
+            \end{figure}
+
+        \end{itemize}
+
+    \item \textbf{Quanto à distribuição dos graus dos grafos, calcular: PDF (Probability Distribution Function) e a CCDF (Complementary Cumulative Distribution Function).}
+        % (Figuras 3 e 4 iriam aqui, se aplicável, também usando [H] se necessário)
+        \begin{figure}[H] % Exemplo, ajuste conforme necessário
+             \centering
+             % !!! Verifique/substitua o nome do arquivo !!!
+             \includegraphics[width=0.9\linewidth]{pdf_rede_neural.png} % NOME FICTÍCIO
+             \caption{PDF da Distribuição de Graus (Ex: Rede Neural).}
+             \label{fig:pdf_graus}
+        \end{figure}
+        \begin{figure}[H] % Exemplo, ajuste conforme necessário
+             \centering
+             % !!! Verifique/substitua o nome do arquivo !!!
+             \includegraphics[width=0.9\linewidth]{ccdf_rede_neural.png} % NOME FICTÍCIO
+             \caption{CCDF da Distribuição de Graus (Ex: Rede Neural).}
+             \label{fig:ccdf_graus}
+        \end{figure}
+
+
+    \item \textbf{A partir da escolha de 2 vértices, determinar todos os possíveis caminhos entre eles.}\\
+    - Para esse problema usamos o dataset do Clube de Karatê, obtendo 80137 caminhos possíveis dado 2 pontos. Abaixo veja a verificação de 1 desses caminhos (Figura~\ref{fig:caminho_karate}). % <<< Texto referencia a figura
+
+    % --- Imagem do Caminho Karatê (Movida para cá e Fixada com [H]) ---
+    \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{possivel_caminho_karate.png} % Placeholder, ajuste width se necessário
+        \caption{Exemplo de um possível caminho no grafo do Clube de Karatê.} % Legenda ajustada
+        \label{fig:caminho_karate} % Rótulo específico
+    \end{figure}
+    % --- Fim da Imagem ---
+
+
+    \item \textbf{A partir da escolha de 2 vértices, determinar o menor caminho.}\\
+    - Para essa questão usamos o Dataset do Clube de Karatê, calculamos a menor distância entre o ponto 16 e 20.
+        \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{menor_caminho_16_20.png} % Placeholder, ajuste width se necessário
+        \caption{Menor caminho entre o nó 16 e 20.} % Legenda ajustada
+        \label{fig:menor_caminho_karate} % Rótulo específico
+    \end{figure}
+    \item \textbf{Determinar a distância média entre todos os pares de vértices.}\\
+    - Após aplicar a função abaixo, descobrimos que a distância média entre os pares de pontos do Dataset do Clube de Karatê é 2.408199643493761.
+     
+    \item \textbf{A partir da escolha de um vértice, determinar a excentricidade.}\\
+    - Aplicamos o calculo da excentricidade no dataset do Clube de Karatê a partir do vertice 1 e observouce que a excentricidade dele é 3.
+          \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{excentricidade_vertice_1.png} % Placeholder, ajuste width se necessário
+        \caption{Excentricidade do vertice 1} % Legenda ajustada
+        \label{fig:excentricidade_vertice_1} % Rótulo específico
+    \end{figure}
+    \item \textbf{Determinar o diâmetro da rede.}\\
+    - Calculando o diamentro do dataset do Clube de Karatê encontramos que o diametro da rede é 5.
+              \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{diametro_rede.png} % Placeholder, ajuste width se necessário
+        \caption{Diametro da rede a partir do ponto 15} % Legenda ajustada
+        \label{fig:diametro_rede} % Rótulo específico
+    \end{figure}
+    \item \textbf{Determinar a densidade dos grafos.}\\
+    Aplicamos a função abaixo no dataset da Rede Neural e contramos que a densidade do grafo é: 0.049%.
+    % --- No Corpo do Documento ---
+A densidade $D$ é definida pela Equação~\ref{eq:densidade_grafo}:
+\begin{equation}
+  D = \frac{2m}{n(n-1)}
+  \label{eq:densidade_grafo} % Rótulo para referenciar a equação
+\end{equation}
+Onde $m$ é o número de arestas e $n$ é o número de nós no grafo.
+
+    \item \textbf{Verificar a existência de ciclos Eulerianos e Hamiltonianos nos Grafos.}\\
+    \noindent{Ciclo Eureliano}\\
+    - Aplicamos a função nx.is\_eulerian em ambos os datasets e identificamos que ambos não são Eurelianos.\\
+    \noindent{Ciclo Hamiltoniano}\\
+    - Aplicamos o metodo de busca por backtracking no dataset do Clube de Karatê e não identificamos nem um ciclo hamiltoniano.
+
+    
+    \item \textbf{Retornar todos os cliques em um grafo.}\\
+    - Aplicamos no dataset do Rede Neural e encontramos 1386 cliques dentro do grafo, Veja abaixo o plot do maior deles. 
+  
+           \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{clique_rede_neural.png} % Placeholder, ajuste width se necessário
+        \caption{Clique Rede Neural} % Legenda ajustada
+        \label{fig:click} % Rótulo específico
+    \end{figure}
+    
+    \item \textbf{Retornar o clique máximo em um grafo.}\\
+    - Aplicamos a função nx.find\_cliques e retornamos o maior
+       \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{maior_click_rede_neural.png} % Placeholder, ajuste width se necessário
+        \caption{Maior click Rede Neural} % Legenda ajustada
+        \label{fig:maior_click} % Rótulo específico
+    \end{figure}
+    \item \textbf{Identificar se o grafo é totalmente conectado e retornar o número de componentes.}\\
+    - Aplicamos a função nx.connected\_components no dataset da Rede Neural e identificamos que o grafo é totalmente conectado por ele tem apenas 1 componente.
+
+    
+    \item \textbf{Retornar o conjunto de nós da maior componente.}\\
+    - Usando a função nx.connected\_components e mais uma regra de busca com o "for", encontramos que o maior componente contêm 297 vertices.
+          \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{maior_componente.png} % Placeholder, ajuste width se necessário
+        \caption{Maior componente Rede Neural} % Legenda ajustada
+        \label{fig:maior_click} % Rótulo específico
+    \end{figure}
+    \item \textbf{Verificar se dois Grafos são Isomórficos.}\\
+    - Os dois grafos não são isormórficos pos não possuem o mesmo número de arestas e nem de vertices.
+    \item \textbf{Verificar a existência de bridges (pontes) nos grafos.}\\
+    - Usamos a função nx.bridges no dataset da rede neural encontramos os seguintes bridges:
+          \begin{figure}[H] % <<< FORÇA POSICIONAMENTO AQUI
+        \centering
+        % !!! Verifique/substitua o nome do arquivo !!!
+        \includegraphics[width=0.6\linewidth]{brigds_rede_neural.png} % Placeholder, ajuste width se necessário
+        \caption{Brigdes Rede Neural} % Legenda ajustada
+        \label{fig:Brigdes} % Rótulo específico
+    \end{figure}
+\end{enumerate} % Fim da lista numerada
+
+% --- Fim do Documento ---
+\end{document}
